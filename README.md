@@ -24,6 +24,202 @@ _getSelectLabel = () => {
     }).join(', ')
   };
 <code>
+  
+# update this render function
+render() {
+    const {
+      selectedItems,
+      single,
+      fontFamily,
+      altFontFamily,
+      searchInputPlaceholderText,
+      searchInputStyle,
+      styleDropdownMenu,
+      styleDropdownMenuSubsection,
+      hideSubmitButton,
+      hideDropdown,
+      submitButtonColor,
+      submitButtonText,
+      fontSize,
+      textColor,
+      fixedHeight,
+      hideTags,
+      textInputProps,
+      styleMainWrapper,
+      styleInputGroup,
+      styleItemsContainer,
+      styleSelectorContainer,
+      styleTextDropdown,
+      styleTextDropdownSelected,
+      searchIcon,
+      styleIndicator,
+      autoFocus
+    } = this.props;
+    const { searchTerm, selector } = this.state;
+    return (
+      <View
+        style={[
+          {
+            flexDirection: 'column'
+          } &&
+            styleMainWrapper &&
+            styleMainWrapper
+        ]}
+      >
+        {selector ? (
+          <View
+            style={[
+              styles.selectorView(fixedHeight),
+              styleSelectorContainer && styleSelectorContainer
+            ]}
+          >
+            <View
+              style={[styles.inputGroup, styleInputGroup && styleInputGroup]}
+            >
+              {searchIcon}
+              <TextInput
+                autoFocus={autoFocus}
+                onChangeText={this._onChangeInput}
+                onSubmitEditing={this._addItem}
+                placeholder={searchInputPlaceholderText}
+                placeholderTextColor={colorPack.placeholderTextColor}
+                underlineColorAndroid="transparent"
+                style={[searchInputStyle, { flex: 1 }]}
+                value={searchTerm}
+                {...textInputProps}
+              />
+              {hideSubmitButton && (
+                <TouchableOpacity onPress={this._submitSelection}>
+                  <Icon
+                    name="menu-down"
+                    style={[
+                      styles.indicator,
+                      { paddingLeft: 15, paddingRight: 15 },
+                      styleIndicator && styleIndicator,
+                    ]}
+                  />
+                </TouchableOpacity>
+              )}
+              {!hideDropdown && (
+                <Icon
+                  name="arrow-left"
+                  size={20}
+                  onPress={this._clearSelectorCallback}
+                  color={colorPack.placeholderTextColor}
+                  style={{ marginLeft: 5 }}
+                />
+              )}
+            </View>
+            <View
+              style={{
+                flexDirection: 'column',
+                backgroundColor: '#fafafa'
+              }}
+            >
+              <View style={styleItemsContainer && styleItemsContainer}>
+                {this._renderItems()}
+              </View>
+              {!single && !hideSubmitButton && (
+                <TouchableOpacity
+                  onPress={() => this._submitSelection()}
+                  style={[
+                    styles.button,
+                    { backgroundColor: submitButtonColor }
+                  ]}
+                >
+                  <Text
+                    style={[
+                      styles.buttonText,
+                      fontFamily ? { fontFamily } : {}
+                    ]}
+                  >
+                    {submitButtonText}
+                  </Text>
+                </TouchableOpacity>
+              )}
+            </View>
+          </View>
+        ) : (
+          <View>
+            <View
+              style={[
+                styles.dropdownView,
+                styleDropdownMenu && styleDropdownMenu
+              ]}
+            >
+              <View
+                style={[
+                  styles.subSection,
+                  { paddingTop: 10, paddingBottom: 10 },
+                  styleDropdownMenuSubsection && styleDropdownMenuSubsection
+                ]}
+              >
+                <TouchableWithoutFeedback onPress={this._toggleSelector}>
+                  <View
+                    style={{
+                      flex: 1,
+                      flexDirection: 'row',
+                      alignItems: 'center'
+                    }}
+                  >
+                    <Text
+                      style={
+                        !selectedItems || selectedItems.length === 0
+                          ? [
+                              {
+                                flex: 1,
+                                fontSize: fontSize || 16,
+                                color:
+                                  textColor || colorPack.placeholderTextColor
+                              },
+                              styleTextDropdown && styleTextDropdown,
+                              altFontFamily
+                                ? { fontFamily: altFontFamily }
+                                : fontFamily
+                                ? { fontFamily }
+                                : {}
+                            ]
+                          : [
+                              {
+                                flex: 1,
+                                fontSize: fontSize || 16,
+                                color:
+                                  textColor || colorPack.placeholderTextColor
+                              },
+                              styleTextDropdownSelected &&
+                                styleTextDropdownSelected
+                            ]
+                      }
+                      numberOfLines={1}
+                    >
+                      {this._getSelectLabel()}
+                    </Text>
+                    <Icon
+                      name={hideSubmitButton ? 'menu-right' : 'menu-down'}
+                      style={[
+                        styles.indicator,
+                        styleIndicator && styleIndicator,
+                      ]}
+                    />
+                  </View>
+                </TouchableWithoutFeedback>
+              </View>
+            </View>
+            {!single && !hideTags && selectedItems.length ? (
+              <View
+                style={{
+                  flexDirection: 'row',
+                  flexWrap: 'wrap'
+                }}
+              >
+                {this._displaySelectedItems()}
+              </View>
+            ) : null}
+          </View>
+        )}
+      </View>
+    );
+  }
 
 
 
