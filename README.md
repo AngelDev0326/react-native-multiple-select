@@ -1,9 +1,16 @@
-# On ./index.d.ts, add selectedTitleAsCount to interface MultiSelectProps like as:
-    selectedTitleAsCount?: boolean
- 
- 
-# On lib/react-native-multi-select.js, add selectedTitleAsCount to propTypes and defaultProps, update function _getSelectLabel() like as:
+## Updated By Angel dev
+# On ./index.d.ts,
+- add selectedTitleAsCount to interface MultiSelectProps like as:
 
+<code>selectedTitleAsCount?: boolean</code>
+
+<code>
+  toggleDropdownListShow = () => {
+    this._submitSelection();
+  }
+</code>
+ 
+- add selectedTitleAsCount to propTypes and defaultProps, update function _getSelectLabel() like as:
 
 <code>
 _getSelectLabel = () => {
@@ -398,6 +405,8 @@ The component takes 3 compulsory props - `items`, `uniqueKey` and `onSelectedIte
 | uniqueKey      | Yes      | (String) Unique identifier that is part of each item's properties. Used internally as means of identifying each item (Check sample below) |
 |selectedItems | No      | (Array, control prop) List of selected items keys . JavaScript Array of strings, that can be instantiated with the component |
 | removeSelected | No  | (Boolean) Filter selected items from list to be shown in List |
+| autoFocus | No  | (Boolean) Defaults to "false". search input auto focus |
+| selectedTitleAsCount | No  | (Boolean)Defaults to "true". If <code>true</code>, Text displayed as <code>selectedTitle</code> and selected count in main component. If false, it shows the text selected item's labels joined with comma(","). |
 
 ## Note
 
@@ -428,37 +437,3 @@ clearSelectedCategories = () => {
 };
 
 ```
-
-
-## Contributing
-
-Contributions are **welcome** and will be fully **credited**.
-
-Contributions are accepted via Pull Requests on [Github](https://github.com/toystars/react-native-multiple-select).
-
-
-### Pull Requests
-
-- **Document any change in behaviour** - Make sure the `README.md` and any other relevant documentation are kept up-to-date.
-
-- **Consider our release cycle** - We try to follow [SemVer v2.0.0](http://semver.org/). Randomly breaking public APIs is not an option.
-
-- **Create feature branches** - Don't ask us to pull from your master branch.
-
-- **One pull request per feature** - If you want to do more than one thing, send multiple pull requests.
-
-- **Send coherent history** - Make sure each individual commit in your pull request is meaningful. If you had to make multiple intermediate commits while developing, please [squash them](http://www.git-scm.com/book/en/v2/Git-Tools-Rewriting-History#Changing-Multiple-Commit-Messages) before submitting.
-
-
-## Issues
-
-Check issues for current issues.
-
-## Contributors
-
-Here is list of [CONTRIBUTORS](CONTRIBUTORS.md)
-
-
-## License
-
-The MIT License (MIT). Please see [LICENSE](LICENSE) for more information.
