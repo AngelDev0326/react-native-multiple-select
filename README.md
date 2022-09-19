@@ -1,9 +1,9 @@
- # On react-native-multi-select/lib/react-native-multi-select.js, update function _getSelectLabel() like as:
+ # On react-native-multi-select/lib/react-native-multi-select.js, add selectedTitleAsCount to propTypes and defaultProps, update function _getSelectLabel() like as:
 
 
 <code>
 _getSelectLabel = () => {
-    const { selectText, single, selectedItems, displayKey } = this.props;
+    const { selectText, single, selectedItems, displayKey, selectedTitleAsCount } = this.props;
     if (!selectedItems || selectedItems.length === 0) {
       return selectText;
     }
@@ -12,8 +12,8 @@ _getSelectLabel = () => {
       const foundItem = this._findItem(item);
       return get(foundItem, displayKey) || selectText;
     }
-    // return `${selectText} (${selectedItems.length} selected)`;
 
+    if (selectedTitleAsCount) return `${selectText} (${selectedItems.length} selected)`;
     return selectedItems.map((item) => {
       const foundItem = this._findItem(item);
       return get(foundItem, displayKey) || selectText;
