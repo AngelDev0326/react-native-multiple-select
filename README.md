@@ -38,12 +38,12 @@ I've been super busy with work and other projects lately that I really don't hav
 ## Installation
 
 ``` bash
-$ npm install react-native-multiple-select --save
+$ npm install https://github.com/AngelDev727/react-native-multiple-select.git#master --save
 ```
 or use yarn
 
 ``` bash
-$ yarn add react-native-multiple-select
+$ yarn add https://github.com/AngelDev727/react-native-multiple-select.git#master
 ```
 
 
