@@ -1,4 +1,5 @@
-# Updated By Angel dev
+
+## Updated By Angel dev: properties: <code>selectedTitleAsCount, autoFocus</code> and functions: <code>closeDropdownList, openDropdownList</code>
 
 ## On ./index.d.ts
 - add selectedTitleAsCount to interface MultiSelectProps like as:
