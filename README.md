@@ -1,8 +1,8 @@
-  # On ./index.d.ts, add selectedTitleAsCount to interface MultiSelectProps like as:
+# On ./index.d.ts, add selectedTitleAsCount to interface MultiSelectProps like as:
     selectedTitleAsCount?: boolean
  
  
- # On lib/react-native-multi-select.js, add selectedTitleAsCount to propTypes and defaultProps, update function _getSelectLabel() like as:
+# On lib/react-native-multi-select.js, add selectedTitleAsCount to propTypes and defaultProps, update function _getSelectLabel() like as:
 
 
 <code>
