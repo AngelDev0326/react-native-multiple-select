@@ -269,8 +269,8 @@ The snippet below shows how the component can be used
 
 ```javascript
 // import component
-import React, { Component } from 'react';
-import { View } from 'react-native';
+import React, { useState, useRef } from 'react';
+import { View, Text } from 'react-native';
 import MultiSelect from 'react-native-multiple-select';
 
 const items = [{
@@ -303,50 +303,43 @@ const items = [{
     }
 ];
 
-class MultiSelectExample extends Component {
+funtion MultiSelectExample = ({}) {
 
-  state = {
-    selectedItems : []
-  };
+  const [selectedItems, setSelectedItems] = useState([]);
+  const selectRef = useRef();
 
-  
-  onSelectedItemsChange = selectedItems => {
-    this.setState({ selectedItems });
-  };
-
-  render() {
-    const { selectedItems } = this.state;
-
-    return (
-      <View style={{ flex: 1 }}>
-        <MultiSelect
-          hideTags
-          items={items}
-          uniqueKey="id"
-          ref={(component) => { this.multiSelect = component }}
-          onSelectedItemsChange={this.onSelectedItemsChange}
-          selectedItems={selectedItems}
-          selectText="Pick Items"
-          searchInputPlaceholderText="Search Items..."
-          onChangeInput={ (text)=> console.log(text)}
-          altFontFamily="ProximaNova-Light"
-          tagRemoveIconColor="#CCC"
-          tagBorderColor="#CCC"
-          tagTextColor="#CCC"
-          selectedItemTextColor="#CCC"
-          selectedItemIconColor="#CCC"
-          itemTextColor="#000"
-          displayKey="name"
-          searchInputStyle={{ color: '#CCC' }}
-          submitButtonColor="#CCC"
-          submitButtonText="Submit"
-        />
-        <View>
-          {this.multiSelect.getSelectedItemsExt(selectedItems)}
-        </View>
+  return (
+    <View style={{ flex: 1 }}>
+      <MultiSelect
+        hideTags
+        items={items}
+        uniqueKey="id"
+        ref={selectRef}
+        onSelectedItemsChange={setSelectedItems}
+        selectedItems={selectedItems}
+        selectText="Pick Items"
+        searchInputPlaceholderText="Search Items..."
+        onChangeInput={ (text)=> console.log(text)}
+        altFontFamily="ProximaNova-Light"
+        tagRemoveIconColor="#CCC"
+        tagBorderColor="#CCC"
+        tagTextColor="#CCC"
+        selectedItemTextColor="#CCC"
+        selectedItemIconColor="#CCC"
+        itemTextColor="#000"
+        displayKey="name"
+        searchInputStyle={{ color: '#CCC' }}
+        submitButtonColor="#CCC"
+        submitButtonText="Submit"
+      />
+      <View>
+        {selectRef.current?.getSelectedItemsExt(selectedItems)}
       </View>
-    );
-  }
+        
+      <Text onPress={() => selectRef.current?.closeDropdownList()}>Close</Text>
+      <Text onPress={() => selectRef.current?.openDropdownList()}>Open</Text>
+    </View>
+  );
 }
 
 ```
