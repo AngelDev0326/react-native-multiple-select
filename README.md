@@ -6,8 +6,12 @@
 <code>selectedTitleAsCount?: boolean</code>
 
 <code>
-  toggleDropdownListShow = () => {
+  closeDropdownList = () => {
     this.state.selector && this._submitSelection();
+  }
+
+  openDropdownList = () => {
+    !this.state.selector && this._submitSelection();
   }
 </code>
  
