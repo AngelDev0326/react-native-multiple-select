@@ -1,5 +1,7 @@
  # On react-native-multi-select/lib/react-native-multi-select.js, update function _getSelectLabel() like as:
 
+
+<code>
 _getSelectLabel = () => {
     const { selectText, single, selectedItems, displayKey } = this.props;
     if (!selectedItems || selectedItems.length === 0) {
@@ -17,7 +19,7 @@ _getSelectLabel = () => {
       return get(foundItem, displayKey) || selectText;
     }).join(', ')
   };
-
+<code>
 
 
 
