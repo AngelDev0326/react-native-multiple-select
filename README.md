@@ -1,12 +1,13 @@
-## Updated By Angel dev
-# On ./index.d.ts,
+# Updated By Angel dev
+
+## On ./index.d.ts
 - add selectedTitleAsCount to interface MultiSelectProps like as:
 
 <code>selectedTitleAsCount?: boolean</code>
 
 <code>
   toggleDropdownListShow = () => {
-    this._submitSelection();
+    this.state.selector && this._submitSelection();
   }
 </code>
  
