@@ -1,3 +1,26 @@
+ # On react-native-multi-select/lib/react-native-multi-select.js, update function _getSelectLabel() like as:
+
+_getSelectLabel = () => {
+    const { selectText, single, selectedItems, displayKey } = this.props;
+    if (!selectedItems || selectedItems.length === 0) {
+      return selectText;
+    }
+    if (single) {
+      const item = selectedItems[0];
+      const foundItem = this._findItem(item);
+      return get(foundItem, displayKey) || selectText;
+    }
+    // return `${selectText} (${selectedItems.length} selected)`;
+
+    return selectedItems.map((item) => {
+      const foundItem = this._findItem(item);
+      return get(foundItem, displayKey) || selectText;
+    }).join(', ')
+  };
+
+
+
+
 # react-native-multiple-select
 
 [![npm](https://img.shields.io/npm/v/react-native-multiple-select.svg)](https://www.npmjs.com/package/react-native-multiple-select) [![Downloads](https://img.shields.io/npm/dt/react-native-multiple-select.svg)](https://www.npmjs.com/package/react-native-multiple-select) [![Licence](https://img.shields.io/npm/l/react-native-multiple-select.svg)](https://www.npmjs.com/package/react-native-multiple-select)
