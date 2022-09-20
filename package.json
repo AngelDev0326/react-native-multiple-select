@@ -1,6 +1,6 @@
 {
   "name": "react-native-multiple-select",
-  "version": "0.5.11",
+  "version": "1.0.0",
   "description": "Simple multi-select component for react-native",
   "main": "index.js",
   "scripts": {
@@ -20,7 +20,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/toystars/react-native-multiple-select.git"
+    "url": "git+https://github.com/AngelDev727/react-native-multiple-select.git"
   },
   "keywords": [
     "reactnative",
@@ -28,12 +28,12 @@
     "multi-select",
     "react-native"
   ],
-  "author": "Mustapha Babatunde Oluwaleke",
+  "author": "Angel Dev",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/toystars/react-native-multiple-select/issues"
+    "url": "https://github.com/AngelDev727/react-native-multiple-select/issues"
   },
-  "homepage": "https://github.com/toystars/react-native-multiple-select#readme",
+  "homepage": "https://github.com/AngelDev727/react-native-multiple-select#readme",
   "dependencies": {
     "prop-types": "^15.7.2"
   },
@@ -56,7 +56,7 @@
     "remote-redux-devtools": "^0.5.16"
   },
   "peerDependencies": {
-    "deprecated-react-native-prop-types": ">2.0.0",
+    "deprecated-react-native-prop-types": ">2.3.0",
     "lodash": ">4.17.00",
     "react": ">16.6.0",
     "react-native": ">0.57.0",
