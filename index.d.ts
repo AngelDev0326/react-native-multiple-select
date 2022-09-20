@@ -55,6 +55,6 @@ export interface MultiSelectProps {
     selectedTitleAsCount?: boolean
 }
 
-export default class MultiSelect extends React.Component<MultiSelectProps> {
+export default class MultipleSelect extends React.Component<MultiSelectProps> {
     getSelectedItemsExt: (items: any[]) => React.ReactNode;
 }
