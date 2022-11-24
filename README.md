@@ -1,4 +1,16 @@
 
+## Installation
+
+``` bash
+$ npm install https://github.com/AngelDev727/react-native-multiple-select.git#master --save
+```
+or use yarn
+
+``` bash
+$ yarn add https://github.com/AngelDev727/react-native-multiple-select.git#master
+```
+
+
 ## Updated By Angel dev: properties: <code>selectedTitleAsCount, autoFocus</code> and functions: <code>closeDropdownList, openDropdownList</code>
 
 ## On ./index.d.ts
@@ -247,17 +259,6 @@ render() {
 
 ## Important notice
 I've been super busy with work and other projects lately that I really don't have enough time to dedicate to this project. If you would like to maintain this project, you can drop me an [email](mailto:toystars2008@gmail.com). Thanks.
-
-## Installation
-
-``` bash
-$ npm install https://github.com/AngelDev727/react-native-multiple-select.git#master --save
-```
-or use yarn
-
-``` bash
-$ yarn add https://github.com/AngelDev727/react-native-multiple-select.git#master
-```
 
 
 ## Usage
