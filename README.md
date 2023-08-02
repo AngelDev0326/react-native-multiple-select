@@ -1,5 +1,260 @@
+## Change info
 
-# react-native-multiple-select
+1. style custom
+2. show selectedTitle with Count(optional)
+
+
+
+## Installation
+
+``` bash
+$ npm install https://github.com/AngelDev0326/react-native-multiple-select.git#master --save
+```
+or use yarn
+
+``` bash
+$ yarn add https://github.com/AngelDev0326/react-native-multiple-select.git#master
+```
+
+
+## Updated By Angel dev: properties: <code>selectedTitleAsCount, autoFocus</code> and functions: <code>closeDropdownList, openDropdownList</code>
+
+## On ./index.d.ts
+- add selectedTitleAsCount to interface MultiSelectProps like as:
+
+<code>selectedTitleAsCount?: boolean</code>
+
+<code>
+  closeDropdownList = () => {
+    this.state.selector && this._submitSelection();
+  }
+
+  openDropdownList = () => {
+    !this.state.selector && this._submitSelection();
+  }
+</code>
+ 
+- add selectedTitleAsCount to propTypes and defaultProps, update function _getSelectLabel() like as:
+
+<code>
+_getSelectLabel = () => {
+    const { selectText, single, selectedItems, displayKey, selectedTitleAsCount } = this.props;
+    if (!selectedItems || selectedItems.length === 0) {
+      return selectText;
+    }
+    if (single) {
+      const item = selectedItems[0];
+      const foundItem = this._findItem(item);
+      return get(foundItem, displayKey) || selectText;
+    }
+
+    if (selectedTitleAsCount) return `${selectText} (${selectedItems.length} selected)`;
+    return selectedItems.map((item) => {
+      const foundItem = this._findItem(item);
+      return get(foundItem, displayKey) || selectText;
+    }).join(', ')
+  };
+</code>
+  
+# update this render function
+<code>
+render() {
+    const {
+      selectedItems,
+      single,
+      fontFamily,
+      altFontFamily,
+      searchInputPlaceholderText,
+      searchInputStyle,
+      styleDropdownMenu,
+      styleDropdownMenuSubsection,
+      hideSubmitButton,
+      hideDropdown,
+      submitButtonColor,
+      submitButtonText,
+      fontSize,
+      textColor,
+      fixedHeight,
+      hideTags,
+      textInputProps,
+      styleMainWrapper,
+      styleInputGroup,
+      styleItemsContainer,
+      styleSelectorContainer,
+      styleTextDropdown,
+      styleTextDropdownSelected,
+      searchIcon,
+      styleIndicator,
+      autoFocus
+    } = this.props;
+    const { searchTerm, selector } = this.state;
+    return (
+      <View
+        style={[
+          {
+            flexDirection: 'column'
+          } &&
+            styleMainWrapper &&
+            styleMainWrapper
+        ]}
+      >
+        {selector ? (
+          <View
+            style={[
+              styles.selectorView(fixedHeight),
+              styleSelectorContainer && styleSelectorContainer
+            ]}
+          >
+            <View
+              style={[styles.inputGroup, styleInputGroup && styleInputGroup]}
+            >
+              {searchIcon}
+              <TextInput
+                autoFocus={autoFocus}
+                onChangeText={this._onChangeInput}
+                onSubmitEditing={this._addItem}
+                placeholder={searchInputPlaceholderText}
+                placeholderTextColor={colorPack.placeholderTextColor}
+                underlineColorAndroid="transparent"
+                style={[searchInputStyle, { flex: 1 }]}
+                value={searchTerm}
+                {...textInputProps}
+              />
+              {hideSubmitButton && (
+                <TouchableOpacity onPress={this._submitSelection}>
+                  <Icon
+                    name="menu-down"
+                    style={[
+                      styles.indicator,
+                      { paddingLeft: 15, paddingRight: 15 },
+                      styleIndicator && styleIndicator,
+                    ]}
+                  />
+                </TouchableOpacity>
+              )}
+              {!hideDropdown && (
+                <Icon
+                  name="arrow-left"
+                  size={20}
+                  onPress={this._clearSelectorCallback}
+                  color={colorPack.placeholderTextColor}
+                  style={{ marginLeft: 5 }}
+                />
+              )}
+            </View>
+            <View
+              style={{
+                flexDirection: 'column',
+                backgroundColor: '#fafafa'
+              }}
+            >
+              <View style={styleItemsContainer && styleItemsContainer}>
+                {this._renderItems()}
+              </View>
+              {!single && !hideSubmitButton && (
+                <TouchableOpacity
+                  onPress={() => this._submitSelection()}
+                  style={[
+                    styles.button,
+                    { backgroundColor: submitButtonColor }
+                  ]}
+                >
+                  <Text
+                    style={[
+                      styles.buttonText,
+                      fontFamily ? { fontFamily } : {}
+                    ]}
+                  >
+                    {submitButtonText}
+                  </Text>
+                </TouchableOpacity>
+              )}
+            </View>
+          </View>
+        ) : (
+          <View>
+            <View
+              style={[
+                styles.dropdownView,
+                styleDropdownMenu && styleDropdownMenu
+              ]}
+            >
+              <View
+                style={[
+                  styles.subSection,
+                  { paddingTop: 10, paddingBottom: 10 },
+                  styleDropdownMenuSubsection && styleDropdownMenuSubsection
+                ]}
+              >
+                <TouchableWithoutFeedback onPress={this._toggleSelector}>
+                  <View
+                    style={{
+                      flex: 1,
+                      flexDirection: 'row',
+                      alignItems: 'center'
+                    }}
+                  >
+                    <Text
+                      style={
+                        !selectedItems || selectedItems.length === 0
+                          ? [
+                              {
+                                flex: 1,
+                                fontSize: fontSize || 16,
+                                color:
+                                  textColor || colorPack.placeholderTextColor
+                              },
+                              styleTextDropdown && styleTextDropdown,
+                              altFontFamily
+                                ? { fontFamily: altFontFamily }
+                                : fontFamily
+                                ? { fontFamily }
+                                : {}
+                            ]
+                          : [
+                              {
+                                flex: 1,
+                                fontSize: fontSize || 16,
+                                color:
+                                  textColor || colorPack.placeholderTextColor
+                              },
+                              styleTextDropdownSelected &&
+                                styleTextDropdownSelected
+                            ]
+                      }
+                      numberOfLines={1}
+                    >
+                      {this._getSelectLabel()}
+                    </Text>
+                    <Icon
+                      name={hideSubmitButton ? 'menu-right' : 'menu-down'}
+                      style={[
+                        styles.indicator,
+                        styleIndicator && styleIndicator,
+                      ]}
+                    />
+                  </View>
+                </TouchableWithoutFeedback>
+              </View>
+            </View>
+            {!single && !hideTags && selectedItems.length ? (
+              <View
+                style={{
+                  flexDirection: 'row',
+                  flexWrap: 'wrap'
+                }}
+              >
+                {this._displaySelectedItems()}
+              </View>
+            ) : null}
+          </View>
+        )}
+      </View>
+    );
+  }
+</code>
+
+## react-native-multiple-select
 
 [![npm](https://img.shields.io/npm/v/react-native-multiple-select.svg)](https://www.npmjs.com/package/react-native-multiple-select) [![Downloads](https://img.shields.io/npm/dt/react-native-multiple-select.svg)](https://www.npmjs.com/package/react-native-multiple-select) [![Licence](https://img.shields.io/npm/l/react-native-multiple-select.svg)](https://www.npmjs.com/package/react-native-multiple-select)
 
@@ -11,7 +266,7 @@
 ## Usage
 Note: Ensure to add and configure [react-native-vector-icons](https://github.com/oblador/react-native-vector-icons) to your project before using this package.
 
-You can clone and try out the [sample](https://github.com/toystars/RN-multiple-select-sample) app or you can try [sample](https://github.com/AugustoAleGon/react-native-multiple-select-sample)
+You can clone and try out the [sample](https://github.com/AngelDev0326/RN-multiple-select-sample) app or you can try [sample](https://github.com/AugustoAleGon/react-native-multiple-select-sample)
 
 The snippet below shows how the component can be used
 
@@ -110,7 +365,7 @@ The component takes 3 compulsory props - `items`, `uniqueKey` and `onSelectedIte
 | altFontFamily | No      | (String) Font family for `searchInputPlaceholderText` |
 | canAddItems | No      | (Boolean) Defaults to "false". This allows a user to add items to the list of items provided. You need to handle adding the new items in the onAddItem function prop. Items may be added with the return key on the native keyboard. |
 | displayKey | No | (String) Defaults to "name". This string will be used to select the key to display the objects in the items array |
-| fixedHeight | No     | (Boolean) Defaults to false. Specifies if select dropdown take height of content or a fixed height with a scrollBar (There is an issue with this behavior when component is nested in a ScrollView in which scroll event will only be dispatched to parent ScrollView and select component won't be scrollable). See [this issue](https://github.com/toystars/react-native-multiple-select/issues/12) for more info. |
+| fixedHeight | No     | (Boolean) Defaults to false. Specifies if select dropdown take height of content or a fixed height with a scrollBar (There is an issue with this behavior when component is nested in a ScrollView in which scroll event will only be dispatched to parent ScrollView and select component won't be scrollable). See [this issue](https://github.com/AngelDev0326/react-native-multiple-select/issues/12) for more info. |
 | filterMethod | No | (String) Defaults to  "partial". options: ["partial", "full"] Choose the logic on how the system filters items based on searchTerm. partial: checks all individual words and if at least one word matches will include that item. full: checks to ensure the item contains the full substring of searchterm in order minus any leading or trailing spaces.
 | flatListProps | No | (Object) Properties for the FlatList. Pass any property that is required on the FlatList of the dropdown menu |
 | fontFamily | No     | (String) Custom font family to be used in component (affects all text except `searchInputPlaceholderText` described above) |
@@ -142,7 +397,7 @@ The component takes 3 compulsory props - `items`, `uniqueKey` and `onSelectedIte
 | styleIndicator | No | (Style) Style the Icon for indicator |
 | styleInputGroup | No | (Style) Style the Container of the Text Input Group |
 | styleItemsContainer | No | (Style) Style the Container of the items that are displayed in a list |
-| styleListContainer | No | (Style) Style the Container of main list. See [this issue] (https://github.com/toystars/react-native-multiple-select/issues/12)|
+| styleListContainer | No | (Style) Style the Container of main list. See [this issue] (https://github.com/AngelDev0326/react-native-multiple-select/issues/12)|
 | styleMainWrapper | No | (Style) Style the Main Container of the MultiSelector |
 | styleRowList | No | (Style) Style the Row that is displayed after you |
 | styleSelectorContainer | No | (Style) Style the Container of the Selector when user clicks on the dropdown|
@@ -185,28 +440,8 @@ To use, add ref to MultiSelect component in parent component, then call method a
   ...
 />
 
-clearSelectedCategories = () => {
+const clearSelectedCategories = () => {
    multiSelectRef.removeAllItems();
 };
 
 ```
-
-
-## Contributing
-
-Contributions are **welcome** and will be fully **credited**.
-
-Contributions are accepted via Pull Requests on [Github](https://github.com/toystars/react-native-multiple-select).
-
-
-### Pull Requests
-
-- **Document any change in behaviour** - Make sure the `README.md` and any other relevant documentation are kept up-to-date.
-
-- **Consider our release cycle** - We try to follow [SemVer v2.0.0](http://semver.org/). Randomly breaking public APIs is not an option.
-
-- **Create feature branches** - Don't ask us to pull from your master branch.
-
-- **One pull request per feature** - If you want to do more than one thing, send multiple pull requests.
-
-- **Send coherent history** - Make sure each individual commit in your pull request is meaningful. If you had to make multiple intermediate commits while developing, please [squash them](http://www.git-scm.com/book/en/v2/Git-Tools-Rewriting-History#Changing-Multiple-Commit-Messages) before submitting.
