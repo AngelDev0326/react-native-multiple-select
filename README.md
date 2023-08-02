@@ -8,12 +8,12 @@
 ## Installation
 
 ``` bash
-$ npm install https://github.com/AngelDev727/react-native-multiple-select.git#master --save
+$ npm install https://github.com/AngelDev0326/react-native-multiple-select.git#master --save
 ```
 or use yarn
 
 ``` bash
-$ yarn add https://github.com/AngelDev727/react-native-multiple-select.git#master
+$ yarn add https://github.com/AngelDev0326/react-native-multiple-select.git#master
 ```
 
 
