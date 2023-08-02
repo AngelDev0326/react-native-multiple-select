@@ -266,6 +266,17 @@ render() {
 ## Important notice
 I've been super busy with work and other projects lately that I really don't have enough time to dedicate to this project. If you would like to maintain this project, you can drop me an [email](mailto:toystars2008@gmail.com). Thanks.
 
+## Installation
+
+``` bash
+$ npm install react-native-multiple-select --save
+```
+or use yarn
+
+``` bash
+$ yarn add react-native-multiple-select
+```
+
 
 ## Usage
 Note: Ensure to add and configure [react-native-vector-icons](https://github.com/oblador/react-native-vector-icons) to your project before using this package.
@@ -277,8 +288,8 @@ The snippet below shows how the component can be used
 
 ```javascript
 // import component
-import React, { useState, useRef } from 'react';
-import { View, Text } from 'react-native';
+import React, { Component } from 'react';
+import { View } from 'react-native';
 import MultiSelect from 'react-native-multiple-select';
 
 const items = [{
@@ -311,43 +322,50 @@ const items = [{
     }
 ];
 
-funtion MultiSelectExample = ({}) {
+class MultiSelectExample extends Component {
 
-  const [selectedItems, setSelectedItems] = useState([]);
-  const selectRef = useRef();
+  state = {
+    selectedItems : []
+  };
 
-  return (
-    <View style={{ flex: 1 }}>
-      <MultiSelect
-        hideTags
-        items={items}
-        uniqueKey="id"
-        ref={selectRef}
-        onSelectedItemsChange={setSelectedItems}
-        selectedItems={selectedItems}
-        selectText="Pick Items"
-        searchInputPlaceholderText="Search Items..."
-        onChangeInput={ (text)=> console.log(text)}
-        altFontFamily="ProximaNova-Light"
-        tagRemoveIconColor="#CCC"
-        tagBorderColor="#CCC"
-        tagTextColor="#CCC"
-        selectedItemTextColor="#CCC"
-        selectedItemIconColor="#CCC"
-        itemTextColor="#000"
-        displayKey="name"
-        searchInputStyle={{ color: '#CCC' }}
-        submitButtonColor="#CCC"
-        submitButtonText="Submit"
-      />
-      <View>
-        {selectRef.current?.getSelectedItemsExt(selectedItems)}
+  
+  onSelectedItemsChange = selectedItems => {
+    this.setState({ selectedItems });
+  };
+
+  render() {
+    const { selectedItems } = this.state;
+
+    return (
+      <View style={{ flex: 1 }}>
+        <MultiSelect
+          hideTags
+          items={items}
+          uniqueKey="id"
+          ref={(component) => { this.multiSelect = component }}
+          onSelectedItemsChange={this.onSelectedItemsChange}
+          selectedItems={selectedItems}
+          selectText="Pick Items"
+          searchInputPlaceholderText="Search Items..."
+          onChangeInput={ (text)=> console.log(text)}
+          altFontFamily="ProximaNova-Light"
+          tagRemoveIconColor="#CCC"
+          tagBorderColor="#CCC"
+          tagTextColor="#CCC"
+          selectedItemTextColor="#CCC"
+          selectedItemIconColor="#CCC"
+          itemTextColor="#000"
+          displayKey="name"
+          searchInputStyle={{ color: '#CCC' }}
+          submitButtonColor="#CCC"
+          submitButtonText="Submit"
+        />
+        <View>
+          {this.multiSelect.getSelectedItemsExt(selectedItems)}
+        </View>
       </View>
-        
-      <Text onPress={() => selectRef.current?.closeDropdownList()}>Close</Text>
-      <Text onPress={() => selectRef.current?.openDropdownList()}>Open</Text>
-    </View>
-  );
+    );
+  }
 }
 
 ```
@@ -384,6 +402,7 @@ The component takes 3 compulsory props - `items`, `uniqueKey` and `onSelectedIte
 | searchInputPlaceholderText | No      | (String) Placeholder text displayed in multi-select filter input |
 | searchInputStyle | No   | (Object) Style object for multi-select input element  |
 | selectText | No     | (String) Text displayed in main component |
+| selectedText | No | (String) Text displayed when an item is selected can be replaced by any string|
 | selectedItemFontFamily | No   | (String) Font family for each selected item in multi-select drop-down |
 | selectedItemIconColor | No     | (String) Color for `selected` check icon for each selected item in multi-select drop-down |
 | selectedItemTextColor | No   | (String) Text color for each selected item in multi-select drop-down |
@@ -411,8 +430,6 @@ The component takes 3 compulsory props - `items`, `uniqueKey` and `onSelectedIte
 | uniqueKey      | Yes      | (String) Unique identifier that is part of each item's properties. Used internally as means of identifying each item (Check sample below) |
 |selectedItems | No      | (Array, control prop) List of selected items keys . JavaScript Array of strings, that can be instantiated with the component |
 | removeSelected | No  | (Boolean) Filter selected items from list to be shown in List |
-| autoFocus | No  | (Boolean) Defaults to "false". search input auto focus |
-| selectedTitleAsCount | No  | (Boolean)Defaults to "true". If <code>true</code>, Text displayed as <code>selectedTitle</code> and selected count in main component. If false, it shows the text selected item's labels joined with comma(","). |
 
 ## Note
 
@@ -434,12 +451,32 @@ To use, add ref to MultiSelect component in parent component, then call method a
 
 ```javascript
 <MultiSelect
-  ref={c => this._multiSelect = c}
+  ref={multiSelectRef}
   ...
 />
 
 clearSelectedCategories = () => {
-   this._multiSelect._removeAllItems();
+   multiSelectRef.removeAllItems();
 };
 
 ```
+
+
+## Contributing
+
+Contributions are **welcome** and will be fully **credited**.
+
+Contributions are accepted via Pull Requests on [Github](https://github.com/toystars/react-native-multiple-select).
+
+
+### Pull Requests
+
+- **Document any change in behaviour** - Make sure the `README.md` and any other relevant documentation are kept up-to-date.
+
+- **Consider our release cycle** - We try to follow [SemVer v2.0.0](http://semver.org/). Randomly breaking public APIs is not an option.
+
+- **Create feature branches** - Don't ask us to pull from your master branch.
+
+- **One pull request per feature** - If you want to do more than one thing, send multiple pull requests.
+
+- **Send coherent history** - Make sure each individual commit in your pull request is meaningful. If you had to make multiple intermediate commits while developing, please [squash them](http://www.git-scm.com/book/en/v2/Git-Tools-Rewriting-History#Changing-Multiple-Commit-Messages) before submitting.
